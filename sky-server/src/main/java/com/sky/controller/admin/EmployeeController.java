@@ -4,6 +4,7 @@ import com.sky.constant.JwtClaimsConstant;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
 import com.sky.result.PageResult;
@@ -95,5 +96,56 @@ public class EmployeeController {
         //调用方法
         PageResult<Employee> pageResults = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResults);
+    }
+
+    /**
+     * 设置员工状态信息
+     * @param status 员工状态
+     * @param id    员工id
+     */
+    @ApiOperation(value = "启动、禁用员工账号")
+    @PostMapping("status/{status}")
+    public Result<Void> setStatus(@PathVariable Integer status,Long id){
+        employeeService.setStatus(status,id);
+        return Result.success();
+    }
+
+    /**
+     * 根据id查询员工信息
+     * @param id 员工id
+     */
+    @ApiOperation(value = "根据id查询员工信息")
+    @GetMapping("/{id}")
+    public Result<Employee> getById(@PathVariable Long id){
+        //调用接口查询员工信息
+        Employee employee = employeeService.getById(id);
+        //将结果封装进Result中去
+        return Result.success(employee);
+    }
+
+    /**
+     * 编辑员工信息
+     * @param employeeDTO 编辑员工信息传递的数据模型
+     * @return
+     */
+    @PutMapping
+    @ApiOperation(value = "更新员工信息")
+    public Result<Void> updateEmployee(@RequestBody EmployeeDTO employeeDTO){
+        //调用接口更新员工信息
+        employeeService.updateEmployee(employeeDTO);
+        return Result.success();
+    }
+
+    /**
+     * 修改密码
+     * @param passwordEditDTO 修改密码传递的数据模型
+     * @return
+     */
+    @ApiOperation(value = "编辑密码")
+    @PutMapping("/editPassword")
+    public Result<Void> editPassword(@RequestBody PasswordEditDTO passwordEditDTO){
+        //调用接口编辑密码
+        employeeService.editPassword(passwordEditDTO);
+        return Result.success();
     }
 }

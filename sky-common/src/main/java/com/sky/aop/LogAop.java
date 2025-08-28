@@ -36,8 +36,8 @@ public class LogAop {
         String value = method.getAnnotation(LogAnnotation.class).value();
 
         //输出日志
-        log.info("[AOP日志] ==> 执行信息[{}]: {}.{}, 传入参数: {}",value,className, methodName, Arrays.toString(args));
-
+        log.info("[AOP日志] ==> 执行信息[{}]: {}.{}",value,className, methodName);
+        log.info("[AOP日志] ==> 传入参数: {}", Arrays.toString(args));
         //执行程序
         Object result = joinPoint.proceed();
 
@@ -46,7 +46,7 @@ public class LogAop {
         //计算程序运行时间
         Long costTime = endTime - startTime;
         log.info("[AOP日志] <== 方法 {}.{} 执行完毕, 返回结果: {}", className, methodName, result);
-        log.info("[AOP日志] ==> 耗时: {} ms", costTime);
+        log.info("[AOP日志] <== 耗时: {} ms", costTime);
         return result;
     }
 }

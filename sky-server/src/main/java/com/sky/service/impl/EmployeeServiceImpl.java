@@ -10,9 +10,11 @@ import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
+import com.sky.exception.PasswordEditFailedException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.result.PageResult;
@@ -123,6 +125,90 @@ public class EmployeeServiceImpl implements EmployeeService {
         Page<Employee> page = PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize())
                 .doSelectPage(() -> employeeMapper.getAll(employeePageQueryDTO.getName()));
         return new PageResult<>(page.getTotal(), page.getResult());
+    }
+
+    /**
+     * 设置员工状态（启用/禁用）
+     * @param status
+     * @param id
+     */
+    @LogAnnotation(value = "启用/禁用 员工账号")
+    @Override
+    public void setStatus(Integer status, Long id) {
+        //将参数封装进实体类中
+        Employee employee = Employee.builder()
+                .id(id)
+                .status(status)
+                .build();
+        //调用Mapper接口更新Status
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    @LogAnnotation
+    @Override
+    public Employee getById(Long id) {
+        //调用接口查询员工信息，并返回查询到的结果
+        return employeeMapper.getById(id);
+    }
+
+    /**
+     * 更新员工信息
+     * @param employeeDTO
+     */
+    @LogAnnotation
+    @Override
+    public void updateEmployee(EmployeeDTO employeeDTO) {
+        //创建employee对象
+        Employee employee = new Employee();
+        //将结果封装进员工类中——借助BeanUtils
+        BeanUtils.copyProperties(employeeDTO,employee);
+        //从ThreadLocal中获取当前操作者的id
+        Long currentId = BaseContext.getCurrentId();
+        //设置修改人的id
+        employee.setUpdateUser(currentId);
+        //设置本次修改的时间
+        employee.setUpdateTime(LocalDateTime.now());
+        //调用接口更新员工信息
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 编辑员工密码
+     * @param passwordEditDTO
+     */
+    @LogAnnotation
+    @Override
+    public void editPassword(PasswordEditDTO passwordEditDTO) {
+        //取出提交的旧密码和新密码
+        String oldPassword = passwordEditDTO.getOldPassword();
+        String newPassword = passwordEditDTO.getNewPassword();
+        //通过ThreadLocal获取当前用户的id
+        long id = BaseContext.getCurrentId();
+        //查询当前员工信息
+        Employee employee = employeeMapper.getById(id);
+        //获取当前员工的密码信息
+        String myPassword = employee.getPassword();
+        //借助DigestUtils
+        String md5OldPassword = DigestUtils.md5DigestAsHex(oldPassword.getBytes());
+        //如果输入的旧密码不正确，抛出异常
+        if (!md5OldPassword.equals(myPassword)) {
+            throw new PasswordEditFailedException(MessageConstant.INCORRECT_CURRENT_PASSWORD);
+        }
+        //如果输入的新密码于旧密码一样，抛出异常
+        if (newPassword.equals(oldPassword)) {
+            throw new PasswordEditFailedException(MessageConstant.RECEIVED_SAME_PASSWORD);
+        }
+        //到这里说明验证通过，将新密码转化未md5格式存储到数据库中
+        String md5NewPassword = DigestUtils.md5DigestAsHex(newPassword.getBytes());
+        //将新的密码封装到用户信息中
+        employee.setPassword(md5NewPassword);
+        //调用函数将数据存储到数据库中
+        employeeMapper.update(employee);
     }
 
 }
