@@ -79,4 +79,16 @@
             </if>
         </trim>
     </insert>
+
+    <!--
+        查询全体员工信息，支持根据员工姓名的模糊查询
+        使用了PageHelper，结尾不能加分号
+    -->
+    <select id="getAll" resultType="employee">
+        select * from employee
+        <if test="name != null and name != ''">
+            where name like concat('%',#{name},'%')
+        </if>
+        order by update_time desc
+    </select>
 </mapper>

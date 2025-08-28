@@ -3,8 +3,10 @@ package com.sky.controller.admin;
 import com.sky.constant.JwtClaimsConstant;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
@@ -13,10 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +36,7 @@ public class EmployeeController {
 
     /**
      * 登录
-     * @param employeeLoginDTO
+     * @param employeeLoginDTO 员工登录传递的数据模型
      */
     @ApiOperation(value = "员工登录接口")
     @PostMapping("/login")
@@ -73,13 +72,28 @@ public class EmployeeController {
         return Result.success();
     }
 
-
+    /**
+     * 新增员工信息
+     * @param employeeDTO 新增员工信息传递的数据模型
+     */
     @ApiOperation(value = "保存员工信息接口")
     @PostMapping
-    public Result save(@RequestBody EmployeeDTO employeeDTO) {
+    public Result<Void> save(@RequestBody EmployeeDTO employeeDTO) {
         //调用方法
         employeeService.save(employeeDTO);
         //返回结果
         return Result.success();
+    }
+
+    /**
+     * 员工信息分页查询
+     * @param employeePageQueryDTO 员工分页查询传递的数据模型
+     */
+    @ApiOperation(value = "员工信息分页查询接口")
+    @GetMapping("/page")
+    public Result<PageResult<Employee>> pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
+        //调用方法
+        PageResult<Employee> pageResults = employeeService.pageQuery(employeePageQueryDTO);
+        return Result.success(pageResults);
     }
 }

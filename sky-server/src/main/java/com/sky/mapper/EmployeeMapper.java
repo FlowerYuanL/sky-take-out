@@ -17,6 +17,16 @@ public interface EmployeeMapper {
     @Select("select * from employee where username = #{username}")
     Employee getByUsername(String username);
 
-
+    /**
+     * 新增员工信息
+     * @param employee
+     */
     void save(Employee employee);
+
+    /**
+     * 查询全体员工，支持根据员工姓名模糊查询
+     * @param name
+     * @return
+     */
+    List<Employee> getAll(String name);
 }
