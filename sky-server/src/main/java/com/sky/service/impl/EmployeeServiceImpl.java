@@ -107,7 +107,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return
      */
     @Override
-    @LogAnnotation
+    @LogAnnotation(value = "分页查询员工信息")
     public PageResult<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
 //        //配置PageHelper的参数（页码，记录数）
 //        PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
@@ -149,18 +149,21 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param id
      * @return
      */
-    @LogAnnotation
+    @LogAnnotation(value = "根据id查询员工信息")
     @Override
     public Employee getById(Long id) {
         //调用接口查询员工信息，并返回查询到的结果
-        return employeeMapper.getById(id);
+        Employee employee = employeeMapper.getById(id);
+        //将密码去掉
+        employee.setPassword(PasswordConstant.SECRET_PASSWORD);
+        return employee;
     }
 
     /**
      * 更新员工信息
      * @param employeeDTO
      */
-    @LogAnnotation
+    @LogAnnotation(value = "编辑员工信息")
     @Override
     public void updateEmployee(EmployeeDTO employeeDTO) {
         //创建employee对象
@@ -178,10 +181,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
-     * 编辑员工密码
+     * 修改员工密码
      * @param passwordEditDTO
      */
-    @LogAnnotation
+    @LogAnnotation(value = "修改员工的密码")
     @Override
     public void editPassword(PasswordEditDTO passwordEditDTO) {
         //取出提交的旧密码和新密码

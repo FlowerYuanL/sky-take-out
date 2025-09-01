@@ -28,12 +28,14 @@ logging:
         mapper: debug
         service: info
         controller: info
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level [%thread] %-25.25logger{39} : %msg%n"
 
 sky:
   jwt:
     # 设置jwt签名加密时使用的秘钥
     admin-secret-key: lsxp-hbxz-lxy-zyy-5201314-Super-couple
     # 设置jwt过期时间
-    admin-ttl: 7200000
+    admin-ttl: 86400000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
