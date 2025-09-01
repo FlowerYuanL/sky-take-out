@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+  mapper 根标签：
+  - namespace（必需）：绑定 Mapper 接口的全限定名（包名+接口名）
+  - 作用：建立 XML 文件与 Java 接口的关联[1,6,8](@ref)
+-->
+<mapper namespace="com.sky.mapper.DishFlavorMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO dish_flavor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dishId != null">
+                dish_id,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="value != null and value != ''">
+                value,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="dishId != null">
+                #{dishId},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="value != null and value != ''">
+                #{value},
+            </if>
+        </trim>
+    </insert>
+</mapper>

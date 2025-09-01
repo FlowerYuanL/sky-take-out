@@ -6,3 +6,8 @@ sky:
     database: sky_take_out
     username: root
     password: lsxp3112
+  alioss:
+    access-key-id: LTAI5tDt2NNT7N13hSNz1G6R
+    access-key-secret: oHi8UYjaAsplySN5xv4y29bEayToDK
+    endpoint: oss-cn-beijing.aliyuncs.com
+    bucket-name: lsxp-sky-take-out
