@@ -1,6 +1,8 @@
 package com.sky.mapper;
 
+import com.sky.annotation.AutoFill;
 import com.sky.entity.Category;
+import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -21,12 +23,14 @@ public interface CategoryMapper {
      * 根据id动态更新
      * @param category
      */
+    @AutoFill(value = OperationType.UPDATE)
     void update(Category category);
 
     /**
      * 动态插入数据
      * @param category
      */
+    @AutoFill(value = OperationType.INSERT)
     void save(Category category);
 
     /**

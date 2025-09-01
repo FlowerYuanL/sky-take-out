@@ -1,6 +1,8 @@
 package com.sky.mapper;
 
+import com.sky.annotation.AutoFill;
 import com.sky.entity.Employee;
+import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -21,6 +23,7 @@ public interface EmployeeMapper {
      * 新增员工信息
      * @param employee
      */
+    @AutoFill(value = OperationType.INSERT)
     void save(Employee employee);
 
     /**
@@ -34,6 +37,7 @@ public interface EmployeeMapper {
      * 动态更新SQL语句
      * @param employee
      */
+    @AutoFill(value = OperationType.UPDATE)
     void update(Employee employee);
 
     /**

@@ -62,8 +62,8 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = Category.builder()
                 .id(id)
                 .status(status)
-                .updateTime(LocalDateTime.now())
-                .updateUser(BaseContext.getCurrentId())
+//                .updateTime(LocalDateTime.now())
+//                .updateUser(BaseContext.getCurrentId())
                 .build();
         categoryMapper.update(category);
     }
@@ -81,14 +81,14 @@ public class CategoryServiceImpl implements CategoryService {
         BeanUtils.copyProperties(categoryDTO,category);
         //设置分类的状态
         category.setStatus(StatusConstant.DISABLE);
-        //设置创建的时间信息
-        category.setCreateTime(LocalDateTime.now());
-        category.setUpdateTime(LocalDateTime.now());
-        //从ThreadLocal中获取当前操作者的id
-        Long id = BaseContext.getCurrentId();
-        //设置人员信息
-        category.setCreateUser(id);
-        category.setUpdateUser(id);
+//        //设置创建的时间信息
+//        category.setCreateTime(LocalDateTime.now());
+//        category.setUpdateTime(LocalDateTime.now());
+//        //从ThreadLocal中获取当前操作者的id
+//        Long id = BaseContext.getCurrentId();
+//        //设置人员信息
+//        category.setCreateUser(id);
+//        category.setUpdateUser(id);
         //调用接口将信息保存到数据库
         categoryMapper.save(category);
     }
@@ -134,12 +134,12 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category();
         //借助BeanUtils将CategoryDTO封装进category中
         BeanUtils.copyProperties(categoryDTO,category);
-        //设置当前的时间
-        category.setUpdateTime(LocalDateTime.now());
-        //获取当前的操作人
-        Long id = BaseContext.getCurrentId();
-        //设置当前的操作人
-        category.setUpdateUser(id);
+//        //设置当前的时间
+//        category.setUpdateTime(LocalDateTime.now());
+//        //获取当前的操作人
+//        Long id = BaseContext.getCurrentId();
+//        //设置当前的操作人
+//        category.setUpdateUser(id);
         //调用接口将信息更新到数据库
         categoryMapper.update(category);
     }

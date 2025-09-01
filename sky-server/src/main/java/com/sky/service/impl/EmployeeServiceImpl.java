@@ -85,17 +85,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         BeanUtils.copyProperties(employeeDTO,employee);
         //设置员工状态信息
         employee.setStatus(StatusConstant.ENABLE);
-        //设置信息创建时间和更新时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+//        //设置信息创建时间和更新时间
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
         //设置员工密码信息——借助DegesUtils将默认密码转换为md5加密过的密码
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        //设置创建信息的员工id
-        //获取当前操作者的id
-        Long createUserId = BaseContext.getCurrentId();
-        employee.setCreateUser(createUserId);
-        //设置更新信息的员工id
-        employee.setUpdateUser(createUserId);
+//        //设置创建信息的员工id
+//        //获取当前操作者的id
+//        Long createUserId = BaseContext.getCurrentId();
+//        employee.setCreateUser(createUserId);
+//        //设置更新信息的员工id
+//        employee.setUpdateUser(createUserId);
 
         //调用mapper将信息保存到数据库
         employeeMapper.save(employee);
@@ -170,12 +170,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = new Employee();
         //将结果封装进员工类中——借助BeanUtils
         BeanUtils.copyProperties(employeeDTO,employee);
-        //从ThreadLocal中获取当前操作者的id
-        Long currentId = BaseContext.getCurrentId();
-        //设置修改人的id
-        employee.setUpdateUser(currentId);
-        //设置本次修改的时间
-        employee.setUpdateTime(LocalDateTime.now());
+//        //从ThreadLocal中获取当前操作者的id
+//        Long currentId = BaseContext.getCurrentId();
+//        //设置修改人的id
+//        employee.setUpdateUser(currentId);
+//        //设置本次修改的时间
+//        employee.setUpdateTime(LocalDateTime.now());
         //调用接口更新员工信息
         employeeMapper.update(employee);
     }
