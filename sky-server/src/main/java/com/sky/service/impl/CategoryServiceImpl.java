@@ -3,11 +3,16 @@ package com.sky.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.annotation.LogAnnotation;
+import com.sky.constant.MessageConstant;
+import com.sky.constant.StatusConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
 import com.sky.entity.Category;
+import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.CategoryMapper;
+import com.sky.mapper.DishMapper;
+import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +31,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    private DishMapper dishMapper;
+
+    @Autowired
+    private SetmealMapper setmealMapper;
 
     /**
      * 分类分页查询的接口
@@ -48,7 +59,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @LogAnnotation(value = "设置分类的状态")
     public void setStatus(Integer status, long id) {
-        Category category = Category.builder().id(id).status(status).build();
+        Category category = Category.builder()
+                .id(id)
+                .status(status)
+                .updateTime(LocalDateTime.now())
+                .updateUser(BaseContext.getCurrentId())
+                .build();
         categoryMapper.update(category);
     }
 
@@ -63,6 +79,8 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category();
         //借助BeanUtils将信息转存到Category的实体类中
         BeanUtils.copyProperties(categoryDTO,category);
+        //设置分类的状态
+        category.setStatus(StatusConstant.DISABLE);
         //设置创建的时间信息
         category.setCreateTime(LocalDateTime.now());
         category.setUpdateTime(LocalDateTime.now());
@@ -82,6 +100,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @LogAnnotation(value = "根据id删除分类信息")
     public void deleteCategory(long id) {
+        //删除前需要判断是否还有菜品表和套餐表中是否再对应的分类中
+        //菜品
+        if (dishMapper.countByCategoryId(id) > 0){
+            throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
+        }
+        //套餐
+        if (setmealMapper.countByCategoryId(id) > 0){
+            throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
+        }
         categoryMapper.deteleById(id);
     }
 

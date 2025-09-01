@@ -35,7 +35,7 @@ public class Category implements Serializable {
 
     @ApiModelProperty(value = "分类状态")
     //分类状态 0标识禁用 1表示启用
-    private Integer status = 0;
+    private Integer status;
 
     @ApiModelProperty(value = "创建时间")
     //创建时间
