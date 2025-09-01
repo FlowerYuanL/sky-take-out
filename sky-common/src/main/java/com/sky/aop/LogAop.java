@@ -45,7 +45,7 @@ public class LogAop {
         Long endTime = System.currentTimeMillis();
         //计算程序运行时间
         Long costTime = endTime - startTime;
-        log.info("[AOP日志] <== 方法 {}.{} 执行完毕, 返回结果: {}", className, methodName, result);
+        log.info("[AOP日志] <== 执行信息[{}]: {}.{} 执行完毕, 返回结果: {}",value, className, methodName, result);
         log.info("[AOP日志] <== 耗时: {} ms", costTime);
         return result;
     }
