@@ -42,10 +42,14 @@ public class DishServiceImpl implements DishService {
         dishMapper.save(dish);
         //将id回写到dish实例中
         Long id = dish.getId();
-        //遍历dishFlavor，为dishId赋值
-        dishFlavorList.forEach(flavor -> {
-            flavor.setDishId(id);
-            dishFlavorMapper.save(flavor);
-        });
+        //判断dish是否为空
+        if(!dishFlavorList.isEmpty()){
+            //遍历dishFlavor，为dishId赋值
+            dishFlavorList.forEach(flavor -> {
+                flavor.setDishId(id);
+                dishFlavorMapper.save(flavor);
+            });
+        }
+
     }
 }

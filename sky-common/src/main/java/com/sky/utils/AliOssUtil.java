@@ -7,6 +7,7 @@ import com.aliyun.oss.OSSException;
 import com.sky.properties.AliOssProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,12 +20,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+@Data
 @Slf4j
-@Component
+@NoArgsConstructor
+@AllArgsConstructor
 public class AliOssUtil {
 
-    @Autowired
-    private AliOssProperties aliOssProperties;
+    private String endpoint;
+    private String bucketName;
+    private String accessKeyId;
+    private String accessKeySecret;
 
     /**
      * 文件上传
@@ -33,24 +38,7 @@ public class AliOssUtil {
      * @param objectName
      * @return
      */
-    public String upload(MultipartFile file) throws Exception {
-
-        String endpoint = aliOssProperties.getEndpoint();
-        String bucketName = aliOssProperties.getBucketName();
-        String accessKeyId = aliOssProperties.getAccessKeyId();
-        String accessKeySecret = aliOssProperties.getAccessKeySecret();
-
-        //获取文件的名称
-        String originalFileName = file.getOriginalFilename();
-        log.info("正在上传文件:{}",originalFileName);
-        //获取输入流对象
-        InputStream inputStream = file.getInputStream();
-        //获取当前系统日期的字符串，格式为yyyy/MM
-        String dir = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/"));
-        //使用UUID生成一个新的文件名（不包含扩展名的部分）
-        String newFileName = UUID.randomUUID() + originalFileName.substring(originalFileName.lastIndexOf("."));
-        String objectName = dir + newFileName;
-
+    public String upload(InputStream inputStream,String objectName) throws Exception {
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
@@ -84,7 +72,7 @@ public class AliOssUtil {
                 .append("/")
                 .append(objectName);
 
-        log.info("文件上传到:{}", stringBuilder.toString());
+        log.info("[OSS-Util] <== 文件上传地址:{}", stringBuilder.toString());
 
         return stringBuilder.toString();
     }
