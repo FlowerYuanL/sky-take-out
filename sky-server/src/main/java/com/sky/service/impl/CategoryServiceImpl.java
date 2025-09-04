@@ -43,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @param categoryPageQueryDTO
      * @return
      */
-    @Override
+    
     @LogAnnotation(value = "分类分页查询的接口")
     public PageResult<Category> pageQuery(CategoryPageQueryDTO categoryPageQueryDTO) {
         Page<Category> categories = PageHelper.startPage(categoryPageQueryDTO.getPage(), categoryPageQueryDTO.getPageSize())
@@ -56,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @param status
      * @param id
      */
-    @Override
+    
     @LogAnnotation(value = "设置分类的状态")
     public void setStatus(Integer status, long id) {
         Category category = Category.builder()
@@ -72,7 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
      * 保存分类信息
      * @param categoryDTO
      */
-    @Override
+    
     @LogAnnotation(value = "保存分类信息")
     public void save(CategoryDTO categoryDTO) {
         //创建一个Category的实体类
@@ -97,7 +97,7 @@ public class CategoryServiceImpl implements CategoryService {
      * 根据id删除分类信息
      * @param id
      */
-    @Override
+    
     @LogAnnotation(value = "根据id删除分类信息")
     public void deleteCategory(long id) {
         //删除前需要判断是否还有菜品表和套餐表中是否再对应的分类中
@@ -117,9 +117,9 @@ public class CategoryServiceImpl implements CategoryService {
      * @param type
      * @return
      */
-    @Override
+    
     @LogAnnotation(value = "根据类型查询分类")
-    public List<Category> getBytype(Integer type) {
+    public List<Category> getByType(Integer type) {
         return categoryMapper.getByType(type);
     }
 
@@ -127,7 +127,7 @@ public class CategoryServiceImpl implements CategoryService {
      * 修改分类信息
      * @param categoryDTO
      */
-    @Override
+    
     @LogAnnotation(value = "修改分类")
     public void modifyCategory(CategoryDTO categoryDTO) {
         //新建Category实例

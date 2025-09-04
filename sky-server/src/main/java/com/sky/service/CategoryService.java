@@ -17,7 +17,7 @@ public interface CategoryService {
 
     void deleteCategory(long id);
 
-    List<Category> getBytype(Integer type);
+    List<Category> getByType(Integer type);
 
     void modifyCategory(CategoryDTO categoryDTO);
 }
