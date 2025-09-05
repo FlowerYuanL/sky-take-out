@@ -7,11 +7,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Aspect
@@ -31,13 +32,16 @@ public class LogAop {
         String methodName = method.getName();
         String className = method.getDeclaringClass().getName();
         //获取传入的参数——可能为空
-        Object[] args = joinPoint.getArgs();
+        List<?> args = CollectionUtils.arrayToList(joinPoint.getArgs());
         //获取签名上面的描述信息
         String value = method.getAnnotation(LogAnnotation.class).value();
 
         //输出日志
         log.info("[AOP日志] ==> 执行信息[{}]: {}.{}",value,className, methodName);
-        log.info("[AOP日志] ==> 传入参数: {}", Arrays.toString(args));
+        if(!CollectionUtils.isEmpty(args)){
+            log.info("[AOP日志] ==> 传入参数: {}", args);
+        }
+
         //执行程序
         Object result = joinPoint.proceed();
 
