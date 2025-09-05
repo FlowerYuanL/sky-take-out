@@ -12,6 +12,17 @@ spring:
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
+  redis:
+    host: ${sky.redis.host}
+    port: ${sky.redis.port}
+    password: ${sky.redis.password}
+    database: ${sky.redis.database}
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: 100ms
 
 mybatis:
   #mapper配置文件
@@ -26,7 +37,7 @@ logging:
     com:
       sky:
         mapper: debug
-        service: info
+        service: debug
         controller: info
   pattern:
     console: "%d{HH:mm:ss.SSS} %-5level [%thread] %-25.25logger{39} : %msg%n"

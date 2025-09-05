@@ -1,4 +1,4 @@
-package com.sky.controller.admin;
+package com.sky.controller.user;
 
 
 import com.sky.constant.StatusConstant;
@@ -10,11 +10,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = "用户端口店铺相关接口")
 @Slf4j
-@RestController("adminShopController")
-@RequestMapping("/admin/shop")
-@Api(tags = "管理员端口店铺相关接口")
+@RestController("userShopController")
+@RequestMapping("/user/shop")
 public class ShopController {
+
+
 
     @Autowired
     private ShopService shopService;
@@ -28,16 +30,5 @@ public class ShopController {
     public Result<Integer> getStatus(){
         Integer status = shopService.getStatus();
         return Result.success(status);
-    }
-
-    /**
-     * 设置店铺的营业状态
-     * @param status 状态
-     */
-    @ApiOperation(value = "设置店铺营业状态")
-    @PutMapping("/{status}")
-    public Result<Void> setStatus(@PathVariable Integer status){
-        shopService.setStatus(status);
-        return Result.success();
     }
 }
