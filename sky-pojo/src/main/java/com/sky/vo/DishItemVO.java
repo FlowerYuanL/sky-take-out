@@ -1,5 +1,7 @@
 package com.sky.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,17 +13,18 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "套餐包含的菜品数据模型", description = "用于展示套餐详情中的具体菜品信息")
 public class DishItemVO implements Serializable {
 
-    //菜品名称
+    @ApiModelProperty(value = "菜品名称")
     private String name;
 
-    //份数
+    @ApiModelProperty(value = "份数")
     private Integer copies;
 
-    //菜品图片
+    @ApiModelProperty(value = "菜品图片")
     private String image;
 
-    //菜品描述
+    @ApiModelProperty(value = "菜品描述")
     private String description;
 }

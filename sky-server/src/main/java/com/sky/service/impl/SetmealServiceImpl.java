@@ -18,6 +18,7 @@ import com.sky.mapper.SetmealDishCategoryMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.SetmealService;
+import com.sky.vo.DishItemVO;
 import com.sky.vo.SetmealVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -187,10 +189,20 @@ public class SetmealServiceImpl implements SetmealService {
             setmealList.forEach(setmeal -> {
                 sbNames.append(setmeal.getName() + ",");
             });
-            sbNames.substring(0, sbNames.length() - 1)
-            throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE + sbNames);
+            String errMsg = sbNames.substring(0, sbNames.length() - 1);
+            throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE + errMsg);
         }
         //如果为空，批量删除套餐
         setmealMapper.deleteBatch(ids);
+    }
+
+    /**
+     * 根据套餐id查询菜品信息
+     * @param id
+     * @return
+     */
+    @LogAnnotation(value = "根据套餐id查询菜品信息")
+    public List<DishItemVO> getBySetmealId(Long id) {
+        return setmealAndDishMapper.getBySetmealId(id);
     }
 }
