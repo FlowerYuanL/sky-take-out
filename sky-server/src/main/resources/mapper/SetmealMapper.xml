@@ -15,4 +15,84 @@
         select * from setmeal where category_id = #{categoryId}
     </select>
 
+    <!-- 套餐分页查询，支持分类id，套餐起售状态，以及套餐名称的模糊查询，连接分类表 -->
+    <select id="getForPage" resultType="setmealVO">
+        select
+            s.id, s.category_id, s.name, s.price, s.status, s.description, s.image, s.update_time,
+            c.name category_name
+        from setmeal s left join category c on s.category_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                s.name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                s.category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                s.status = #{status}
+            </if>
+        </where>
+        order by s.update_time desc
+    </select>
+
+    <!-- 插入套餐数据到数据库 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into setmeal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null">category_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="price != null">price,</if>
+            <if test="status != null">status,</if>
+            <if test="description != null and description != ''">description,</if>
+            <if test="image != null and image != ''">image,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="updateUser != null">update_user,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="price != null">#{price},</if>
+            <if test="status != null">#{status},</if>
+            <if test="description != null and description != ''">#{description},</if>
+            <if test="image != null and image != ''">#{image},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+        </trim>
+    </insert>
+
+    <!-- 编辑套餐信息 -->
+    <update id="update">
+        update setmeal
+        <set>
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="image != null and image != ''">
+                image = #{image},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
