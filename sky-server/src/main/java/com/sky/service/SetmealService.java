@@ -16,4 +16,10 @@ public interface SetmealService {
     void save(SetmealDTO setmealDTO);
 
     void setStatus(Integer status, Long id);
+
+    SetmealVO getById(Long id);
+
+    void modify(SetmealDTO setmealDTO);
+
+    void deleteBatch(List<Long> ids);
 }

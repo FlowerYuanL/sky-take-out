@@ -29,4 +29,6 @@ public class SetmealController {
         List<Setmeal> setmealList = setmealService.getByCategoryId(categoryId);
         return Result.success(setmealList);
     }
+
+
 }

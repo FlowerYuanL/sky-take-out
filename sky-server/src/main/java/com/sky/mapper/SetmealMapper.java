@@ -46,4 +46,8 @@ public interface SetmealMapper {
      */
     @AutoFill(OperationType.UPDATE)
     void update(Setmeal setmeal);
+
+    List<Setmeal> getOnSaleById(List<Long> ids);
+
+    void deleteBatch(List<Long> ids);
 }
