@@ -13,7 +13,7 @@ public interface SetmealAndDishMapper {
 
     /**
      * 根据菜品id查询套餐的数量
-     * @param id
+     * @param id 1
      */
     @Select("SELECT COUNT(*) from setmeal_dish where dish_id = #{dishId}")
     Integer countByDishId(Long dishId);
