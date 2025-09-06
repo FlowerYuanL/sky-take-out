@@ -77,7 +77,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param employeeDTO
      */
     @LogAnnotation(value = "新增用户信息")
-    
     public void save(EmployeeDTO employeeDTO) {
         //new一个Employee对象
         Employee employee = new Employee();
@@ -133,7 +132,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param id
      */
     @LogAnnotation(value = "启用/禁用 员工账号")
-    
     public void setStatus(Integer status, Long id) {
         //将参数封装进实体类中
         Employee employee = Employee.builder()
@@ -150,7 +148,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return
      */
     @LogAnnotation(value = "根据id查询员工信息")
-    
     public Employee getById(Long id) {
         //调用接口查询员工信息，并返回查询到的结果
         Employee employee = employeeMapper.getById(id);
@@ -164,7 +161,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param employeeDTO
      */
     @LogAnnotation(value = "编辑员工信息")
-    
     public void updateEmployee(EmployeeDTO employeeDTO) {
         //创建employee对象
         Employee employee = new Employee();
@@ -185,7 +181,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param passwordEditDTO
      */
     @LogAnnotation(value = "修改员工的密码")
-    
     public void editPassword(PasswordEditDTO passwordEditDTO) {
         //取出提交的旧密码和新密码
         String oldPassword = passwordEditDTO.getOldPassword();

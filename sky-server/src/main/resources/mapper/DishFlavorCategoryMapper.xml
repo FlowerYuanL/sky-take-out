@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+  mapper 根标签：
+  - namespace（必需）：绑定 Mapper 接口的全限定名（包名+接口名）
+  - 作用：建立 XML 文件与 Java 接口的关联[1,6,8](@ref)
+-->
+<mapper namespace="com.sky.mapper.DishFlavorCategoryMapper">
+
+    <resultMap id="dishFlavorCategory" type="dishVO">
+        <id property="id" column="d_id"/>
+        <result property="name" column="d_name"/>
+        <result property="categoryId" column="d_category_id"/>
+        <result property="price" column="d_price"/>
+        <result property="image" column="d_image"/>
+        <result property="description" column="d_description"/>
+        <result property="status" column="d_status"/>
+        <result property="updateTime" column="d_update_time"/>
+        <!-- Category 表中的 name 字段 -->
+        <result property="categoryName" column="c_name"/>
+        <!-- 一个菜品对应多种风味，一对多查询 -->
+        <collection property="flavors" ofType="dishFlavor">
+            <id property="id" column="f_id"/>
+            <result property="dishId" column="f_dish_id"/>
+            <result property="name" column="f_name"/>
+            <result property="value" column="f_value"/>
+        </collection>
+    </resultMap>
+
+    <select id="getByCategoryId" resultMap="dishFlavorCategory">
+        select d.id           as d_id,
+               d.name         as d_name,
+               d.category_id  as d_category_id,
+               d.price        as d_price,
+               d.image        as d_image,
+               d.description  as d_description,
+               d.status       as d_status,
+               d.update_time  as d_update_time,
+               c.name         as c_name,
+               f.id           as f_id,
+               f.dish_id      as f_dish_id,
+               f.name         as f_name,
+               f.value        as f_value
+        from dish d
+                 left join dish_flavor f on d.id = f.dish_id
+                 left join category c on d.category_id = c.id
+        where d.category_id = #{categoryId}
+    </select>
+
+
+    <select id="getById" resultMap="dishFlavorCategory">
+        select d.id           as d_id,
+               d.name         as d_name,
+               d.category_id  as d_category_id,
+               d.price        as d_price,
+               d.image        as d_image,
+               d.description  as d_description,
+               d.status       as d_status,
+               d.update_time  as d_update_time,
+               c.name         as c_name,
+               f.id           as f_id,
+               f.dish_id      as f_dish_id,
+               f.name         as f_name,
+               f.value        as f_value
+        from dish d
+                 left join dish_flavor f on d.id = f.dish_id
+                 left join category c on d.category_id = c.id
+        where d.id = #{id}
+    </select>
+</mapper>

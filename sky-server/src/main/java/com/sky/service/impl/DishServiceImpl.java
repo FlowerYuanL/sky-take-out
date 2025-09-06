@@ -10,10 +10,7 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
 import com.sky.exception.DeletionNotAllowedException;
-import com.sky.mapper.DishAndCategoryMapper;
-import com.sky.mapper.DishFlavorMapper;
-import com.sky.mapper.DishMapper;
-import com.sky.mapper.SetmealAndDishMapper;
+import com.sky.mapper.*;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
@@ -42,6 +39,9 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private SetmealAndDishMapper setmealAndDishMapper;
+
+    @Autowired
+    private DishFlavorCategoryMapper dishFlavorCategoryMapper;
 
     /**
      * 新增菜品
@@ -180,13 +180,23 @@ public class DishServiceImpl implements DishService {
     }
 
     /**
-     * 根据菜品id获取菜品信息、风味信息和分类信息
+     * 根据菜品id获取菜品信息+风味信息+分类信息
      * @param id
      * @return
      */
-    @LogAnnotation(value = "根据id获取菜品信息")
+    @LogAnnotation(value = "根据菜品id获取菜品、风味以及分类信息")
     public DishVO getById(Long id) {
-        return dishMapper.getById(id);
+        return dishFlavorCategoryMapper.getById(id);
+    }
+
+    /**
+     * 根据菜品id获取菜品信息+风味信息+分类信息
+     * @param categoryId
+     * @return
+     */
+    @LogAnnotation(value = "根据分类id获取菜品、风味以及分类信息")
+    public List<DishVO> getByCategoryId(Integer categoryId) {
+        return dishFlavorCategoryMapper.getByCategoryId(categoryId);
     }
 
 }

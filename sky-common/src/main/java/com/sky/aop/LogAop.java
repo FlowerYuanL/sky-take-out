@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Aspect
@@ -38,7 +39,7 @@ public class LogAop {
 
         //输出日志
         log.info("[AOP日志] ==> 执行信息[{}]: {}.{}",value,className, methodName);
-        if(!CollectionUtils.isEmpty(args)){
+        if(!CollectionUtils.isEmpty(args) && args.stream().anyMatch(Objects::nonNull)){
             log.info("[AOP日志] ==> 传入参数: {}", args);
         }
 

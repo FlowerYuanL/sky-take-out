@@ -18,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @Api(tags = "菜品相关的接口")
-@RestController
+@RestController("adminDishController")
 @RequestMapping("/admin/dish")
 public class DishController {
 

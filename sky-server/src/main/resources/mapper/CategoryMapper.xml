@@ -106,4 +106,14 @@
             </if>
         </trim>
     </insert>
+    
+    <!--根据类型查询分类-->
+    <select id="getByType" resultType="category">
+        select * from category
+        <where>
+            <if test="type != null ">
+                type = #{type}
+            </if>
+        </where>
+    </select>
 </mapper>
