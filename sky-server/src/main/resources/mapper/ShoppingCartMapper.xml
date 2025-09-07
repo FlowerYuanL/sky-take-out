@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+  mapper 根标签：
+  - namespace（必需）：绑定 Mapper 接口的全限定名（包名+接口名）
+  - 作用：建立 XML 文件与 Java 接口的关联[1,6,8](@ref)
+-->
+<mapper namespace="com.sky.mapper.ShoppingCartMapper">
+
+    <select id="checkSale" resultType="shoppingCart">
+        select * from shopping_cart
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <choose>
+                <when test="setmealId != null">
+                    and setmeal_id = #{setmealId}
+                </when>
+                <otherwise>
+                    and dish_id = #{dishId}
+                    and dish_flavor = #{dishFlavor}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO shopping_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="image != null">image,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="dishId != null">dish_id,</if>
+            <if test="setmealId != null">setmeal_id,</if>
+            <if test="dishFlavor != null">dish_flavor,</if>
+            <if test="number != null">number,</if>
+            <if test="amount != null">amount,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="image != null">#{image},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="dishId != null">#{dishId},</if>
+            <if test="setmealId != null">#{setmealId},</if>
+            <if test="dishFlavor != null">#{dishFlavor},</if>
+            <if test="number != null">#{number},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+
+    <update id="update">
+        update shopping_cart set number = #{number}
+        <where>
+            <choose>
+                <when test="setmealId != null">
+                    and setmeal_id = #{setmealId}
+                </when>
+                <otherwise>
+                    and dish_id = #{dishId}
+                    and dish_flavor = #{dishFlavor}
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+
+</mapper>

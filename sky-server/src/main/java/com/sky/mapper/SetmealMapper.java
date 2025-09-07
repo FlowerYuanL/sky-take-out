@@ -50,4 +50,7 @@ public interface SetmealMapper {
     List<Setmeal> getOnSaleById(List<Long> ids);
 
     void deleteBatch(List<Long> ids);
+
+    @Select("select * from setmeal where id = #{setmealId}")
+    Setmeal getById(Long setmealId);
 }

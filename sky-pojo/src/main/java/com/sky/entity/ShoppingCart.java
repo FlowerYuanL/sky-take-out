@@ -1,5 +1,7 @@
 package com.sky.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,35 +18,38 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(description = "购物车")
 public class ShoppingCart implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键ID", example = "1001")
     private Long id;
 
-    //名称
+    @ApiModelProperty(value = "名称", example = "红烧肉")
     private String name;
 
-    //用户id
+    @ApiModelProperty(value = "用户ID", example = "1")
     private Long userId;
 
-    //菜品id
+    @ApiModelProperty(value = "菜品ID", example = "10")
     private Long dishId;
 
-    //套餐id
+    @ApiModelProperty(value = "套餐ID", example = "20")
     private Long setmealId;
 
-    //口味
+    @ApiModelProperty(value = "口味", example = "微辣")
     private String dishFlavor;
 
-    //数量
+    @ApiModelProperty(value = "数量", example = "2")
     private Integer number;
 
-    //金额
+    @ApiModelProperty(value = "金额", example = "35.50")
     private BigDecimal amount;
 
-    //图片
+    @ApiModelProperty(value = "图片", example = "http://example.com/image.jpg")
     private String image;
 
+    @ApiModelProperty(value = "创建时间", example = "2023-10-27T10:00:00")
     private LocalDateTime createTime;
 }
