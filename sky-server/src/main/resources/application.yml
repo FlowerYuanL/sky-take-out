@@ -38,7 +38,7 @@ logging:
       sky:
         mapper: debug
         service: debug
-        controller: info
+        controller: debug
   pattern:
     console: "%d{HH:mm:ss.SSS} %-5level [%thread] %-25.25logger{39} : %msg%n"
 

@@ -34,7 +34,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      * 添加到购物车
      * @param shoppingCartDTO 添加购物车时传递的数据模型
      */
-    @LogAnnotation
+    @LogAnnotation(value = "添加到购物车")
     public void add(ShoppingCartDTO shoppingCartDTO) {
         //创建一个ShoppingCart的实体类
         ShoppingCart shoppingCart = new ShoppingCart();

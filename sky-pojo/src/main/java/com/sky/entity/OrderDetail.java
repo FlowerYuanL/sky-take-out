@@ -1,5 +1,7 @@
 package com.sky.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,33 +17,35 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "订单详情实体类", description = "订单详情实体类")
 public class OrderDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键ID")
     private Long id;
 
-    //名称
+    @ApiModelProperty(value = "菜品或套餐名称", required = true)
     private String name;
 
-    //订单id
+    @ApiModelProperty(value = "所属订单ID", required = true)
     private Long orderId;
 
-    //菜品id
+    @ApiModelProperty(value = "菜品ID (如果为菜品)")
     private Long dishId;
 
-    //套餐id
+    @ApiModelProperty(value = "套餐ID (如果为套餐)")
     private Long setmealId;
 
-    //口味
+    @ApiModelProperty(value = "口味描述")
     private String dishFlavor;
 
-    //数量
+    @ApiModelProperty(value = "数量", required = true)
     private Integer number;
 
-    //金额
+    @ApiModelProperty(value = "金额", required = true)
     private BigDecimal amount;
 
-    //图片
+    @ApiModelProperty(value = "图片URL")
     private String image;
 }

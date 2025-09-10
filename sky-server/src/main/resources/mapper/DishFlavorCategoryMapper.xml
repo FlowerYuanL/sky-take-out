@@ -50,6 +50,27 @@
         where d.category_id = #{categoryId}
     </select>
 
+    <select id="getOnSaleByCategoryId" resultMap="dishFlavorCategory">
+        select d.id           as d_id,
+               d.name         as d_name,
+               d.category_id  as d_category_id,
+               d.price        as d_price,
+               d.image        as d_image,
+               d.description  as d_description,
+               d.status       as d_status,
+               d.update_time  as d_update_time,
+               c.name         as c_name,
+               f.id           as f_id,
+               f.dish_id      as f_dish_id,
+               f.name         as f_name,
+               f.value        as f_value
+        from dish d
+                 left join dish_flavor f on d.id = f.dish_id
+                 left join category c on d.category_id = c.id
+        where d.category_id = #{categoryId}
+        and d.status = 1
+    </select>
+
 
     <select id="getById" resultMap="dishFlavorCategory">
         select d.id           as d_id,

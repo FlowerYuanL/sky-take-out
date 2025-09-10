@@ -27,5 +27,5 @@ public interface DishService {
 
     DishVO getById(Long id);
 
-    List<DishVO> getByCategoryId(Integer categoryId);
+    List<DishVO> getByCategoryId(Long categoryId);
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+  mapper 根标签：
+  - namespace（必需）：绑定 Mapper 接口的全限定名（包名+接口名）
+  - 作用：建立 XML 文件与 Java 接口的关联[1,6,8](@ref)
+-->
+<mapper namespace="com.sky.mapper.OrderDetailMapper">
+
+    <!-- 动态插入 -->
+    <insert id="insertDynamic" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO order_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="dishId != null">dish_id,</if>
+            <if test="setmealId != null">setmeal_id,</if>
+            <if test="dishFlavor != null and dishFlavor != ''">dish_flavor,</if>
+            <if test="number != null">number,</if>
+            <if test="amount != null">amount,</if>
+            <if test="image != null and image != ''">image,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="dishId != null">#{dishId},</if>
+            <if test="setmealId != null">#{setmealId},</if>
+            <if test="dishFlavor != null and dishFlavor != ''">#{dishFlavor},</if>
+            <if test="number != null">#{number},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="image != null and image != ''">#{image},</if>
+        </trim>
+    </insert>
+
+    <update id="updateDynamic" parameterType="orderDetail">
+        UPDATE order_detail
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="dishId != null">dish_id = #{dishId},</if>
+            <if test="setmealId != null">setmeal_id = #{setmealId},</if>
+            <if test="dishFlavor != null and dishFlavor != ''">dish_flavor = #{dishFlavor},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="image != null and image != ''">image = #{image},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <insert id="insertBatch">
+        INSERT INTO order_detail
+        (name, order_id, dish_id, setmeal_id, dish_flavor, number, amount, image)
+        VALUES
+        <foreach collection="orderDetailList" item="item" separator=",">
+            (#{item.name}, #{item.orderId}, #{item.dishId}, #{item.setmealId}, #{item.dishFlavor}, #{item.number}, #{item.amount}, #{item.image})
+        </foreach>
+    </insert>
+</mapper>

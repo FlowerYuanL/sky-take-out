@@ -28,6 +28,13 @@ public interface SetmealMapper {
     List<Setmeal> getByCategoryId(Integer categoryId);
 
     /**
+     * 根据分类id查询正在出售套餐
+     * @param categoryId
+     */
+    @Select("select * from setmeal where category_id = #{categoryId} and status = 1")
+    List<Setmeal> getOnSaleByCategoryId(Integer categoryId);
+
+    /**
      * 套餐分页查询，支持分类id，套餐起售状态，以及套餐名称的模糊查询，连接分类表
      * @param setmealPageQueryDTO
      */

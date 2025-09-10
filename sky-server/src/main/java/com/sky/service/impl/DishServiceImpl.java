@@ -195,8 +195,8 @@ public class DishServiceImpl implements DishService {
      * @return
      */
     @LogAnnotation(value = "根据分类id获取菜品、风味以及分类信息")
-    public List<DishVO> getByCategoryId(Integer categoryId) {
-        return dishFlavorCategoryMapper.getByCategoryId(categoryId);
+    public List<DishVO> getByCategoryId(Long categoryId) {
+        return dishFlavorCategoryMapper.getOnSaleByCategoryId(categoryId);
     }
 
 }

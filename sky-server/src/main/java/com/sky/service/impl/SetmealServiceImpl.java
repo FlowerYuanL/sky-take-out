@@ -45,12 +45,12 @@ public class SetmealServiceImpl implements SetmealService {
     private SetmealDishAndDishMapper setmealDishAndDishMapper;
 
     /**
-     * 根据分类id查询套餐
+     * 根据分类id查询正在出售套餐
      * @param categoryId
      */
-    @LogAnnotation(value = "根据分类id获取套餐信息")
+    @LogAnnotation(value = "根据分类id获取正在出售的套餐")
     public List<Setmeal> getByCategoryId(Integer categoryId) {
-        return setmealMapper.getByCategoryId(categoryId);
+        return setmealMapper.getOnSaleByCategoryId(categoryId);
     }
 
     /**

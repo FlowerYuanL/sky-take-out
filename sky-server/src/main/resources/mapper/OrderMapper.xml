@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+  mapper 根标签：
+  - namespace（必需）：绑定 Mapper 接口的全限定名（包名+接口名）
+  - 作用：建立 XML 文件与 Java 接口的关联[1,6,8](@ref)
+-->
+<mapper namespace="com.sky.mapper.OrderMapper">
+
+    <!-- 动态插入的SQL语句-->
+    <insert id="insertDynamic" parameterType="orders" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="status != null">status,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="addressBookId != null">address_book_id,</if>
+            <if test="orderTime != null">order_time,</if>
+            <if test="checkoutTime != null">checkout_time,</if>
+            <if test="payMethod != null">pay_method,</if>
+            <if test="payStatus != null">pay_status,</if>
+            <if test="amount != null">amount,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="userName != null and userName != ''">user_name,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="consignee != null and consignee != ''">consignee,</if>
+            <if test="cancelReason != null and cancelReason != ''">cancel_reason,</if>
+            <if test="rejectionReason != null and rejectionReason != ''">rejection_reason,</if>
+            <if test="cancelTime != null">cancel_time,</if>
+            <if test="estimatedDeliveryTime != null">estimated_delivery_time,</if>
+            <if test="deliveryStatus != null">delivery_status,</if>
+            <if test="deliveryTime != null">delivery_time,</if>
+            <if test="packAmount != null">pack_amount,</if>
+            <if test="tablewareNumber != null">tableware_number,</if>
+            <if test="tablewareStatus != null">tableware_status,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="status != null">#{status},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="addressBookId != null">#{addressBookId},</if>
+            <if test="orderTime != null">#{orderTime},</if>
+            <if test="checkoutTime != null">#{checkoutTime},</if>
+            <if test="payMethod != null">#{payMethod},</if>
+            <if test="payStatus != null">#{payStatus},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            <if test="userName != null and userName != ''">#{userName},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="consignee != null and consignee != ''">#{consignee},</if>
+            <if test="cancelReason != null and cancelReason != ''">#{cancelReason},</if>
+            <if test="rejectionReason != null and rejectionReason != ''">#{rejectionReason},</if>
+            <if test="cancelTime != null">#{cancelTime},</if>
+            <if test="estimatedDeliveryTime != null">#{estimatedDeliveryTime},</if>
+            <if test="deliveryStatus != null">#{deliveryStatus},</if>
+            <if test="deliveryTime != null">#{deliveryTime},</if>
+            <if test="packAmount != null">#{packAmount},</if>
+            <if test="tablewareNumber != null">#{tablewareNumber},</if>
+            <if test="tablewareStatus != null">#{tablewareStatus},</if>
+        </trim>
+    </insert>
+
+</mapper>
